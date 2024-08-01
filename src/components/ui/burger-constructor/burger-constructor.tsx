@@ -12,9 +12,9 @@ import { Preloader, OrderDetailsUI } from '@ui';
 
 export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
   constructorItems,
+  orderModalData,
   orderRequest,
   price,
-  orderModalData,
   onOrderClick,
   closeOrderModal
 }) => (
