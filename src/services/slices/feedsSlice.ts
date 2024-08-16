@@ -1,10 +1,10 @@
-import { getFeedsApi } from '@api';
 import {
   createAsyncThunk,
   createSlice,
   SerializedError
 } from '@reduxjs/toolkit';
 import { TOrdersData } from '@utils-types';
+import { getFeedsApi } from '@api';
 
 type TFeedsState = {
   isLoading: boolean;
@@ -12,7 +12,7 @@ type TFeedsState = {
   error: SerializedError | null;
 };
 
-const initialState: TFeedsState = {
+export const initialState: TFeedsState = {
   isLoading: true,
   feedInfo: {
     orders: [],
