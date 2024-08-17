@@ -9,13 +9,14 @@ import {
 } from '@zlden/react-developer-burger-ui-components';
 
 import { TBurgerIngredientUIProps } from './type';
+import { SELECTORS } from '../../../../cypress/support/SELECTORS';
 
 export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
   ({ ingredient, count, handleAdd, locationState }) => {
     const { image, price, name, _id } = ingredient;
 
     return (
-      <li className={styles.container}>
+      <li data-testid={SELECTORS.INGREDIENT} className={styles.container}>
         <Link
           className={styles.article}
           to={`/ingredients/${_id}`}

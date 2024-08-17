@@ -4,8 +4,9 @@ import {
   createSlice,
   SerializedError
 } from '@reduxjs/toolkit';
-import { getOrdersApi, orderBurgerApi, TNewOrderResponse } from '@api';
+
 import { RootState } from '../store';
+import { getOrdersApi, orderBurgerApi, TNewOrderResponse } from '@api';
 
 interface OrdersState {
   orders: TOrder[];
@@ -13,7 +14,7 @@ interface OrdersState {
   error: SerializedError | null;
 }
 
-const initialState: OrdersState = {
+export const initialState: OrdersState = {
   orders: [],
   isLoading: false,
   error: null

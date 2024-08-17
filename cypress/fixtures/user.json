@@ -1,0 +1,9 @@
+{
+  "success":true,
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTkyNTBkMTE5ZDQ1MDAxYjRmYzg5NCIsImlhdCI6MTcyMzc4NjkxNywiZXhwIjoxNzIzNzg4MTE3fQ.bRxYmAoK1YCAFtLzgX75A9Jsce4VFZBWltlZ9U-tx0s\n",
+  "user":
+  {
+    "email":"akhana12@yandex.ru",
+    "name":"Жак-Ив Кусто"
+  }
+}
