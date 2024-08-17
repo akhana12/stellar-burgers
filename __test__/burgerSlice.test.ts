@@ -2,17 +2,12 @@ import burgerReducer, {
   addIngredient,
   removeIngredient,
   moveIngredient,
-  cleanAll
+  cleanAll,
+  initialState
 } from '../src/services/slices/burgerSlice';
 import { bun, filling, sauce } from './mock-data';
 
 describe('тестируем burgerSlice', () => {
-  const initialState = {
-    ingredients: [],
-    isLoading: false,
-    error: null
-  };
-
   it('должен корректно обрабатывать экшен addIngredient', () => {
     const action = addIngredient(filling);
     const state = burgerReducer(initialState, addIngredient(filling));

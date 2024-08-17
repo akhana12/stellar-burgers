@@ -8,7 +8,7 @@ type TBurgerState = {
   error: SerializedError | null;
 };
 
-const initialState: TBurgerState = {
+export const initialState: TBurgerState = {
   ingredients: [],
   isLoading: false,
   error: null

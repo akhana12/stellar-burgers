@@ -1,97 +1,65 @@
 /// <reference types="cypress" />
 
-import ingredients from '../fixtures/ingredients.json';
 import { SELECTORS } from '../support/SELECTORS';
+import { findIngredientByType } from '../support/commands';
 
 describe('Проверка добавления ингредиентов в конструктор', () => {
   beforeEach(() => {
     // мокирование запроса списка ингредиентов
-    cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients.json' }).as(
-      'getIngredients'
-    );
+    cy.mockIngredients();
+
     cy.visit('/');
+
     cy.wait('@getIngredients');
   });
 
   it('Добавление булки в конструктор', () => {
     // находим булку в тестовых данных
-    const bun = ingredients.data.find((item) => item.type === 'bun');
-    if (!bun) {
-      throw new Error('Булка не найдена в тестовых данных');
-    }
+    const bun = findIngredientByType('bun');
 
     // добавляем булку
-    cy.get(`[data-testid=${SELECTORS.INGREDIENT}]`)
-      .contains(bun.name)
-      .parents('li')
-      .within(() => {
-        cy.get(`button`).click({
-          force: true
-        });
-      });
+    cy.addIngredientToConstructor(bun.name);
 
     // проверяем, что булка добавлена в верхнюю и нижнюю части конструктора
-    cy.get('.constructor-element_pos_top').should('contain', bun.name);
-    cy.get('.constructor-element_pos_bottom').should('contain', bun.name);
+    cy.get(SELECTORS.CONSTRUCTOR_ELEMENT_TOP).should('contain', bun.name);
+    cy.get(SELECTORS.CONSTRUCTOR_ELEMENT_BOTTOM).should('contain', bun.name);
   });
 
   it('Замена булки в конструкторе', () => {
     // находим две булки в тестовых данных
-    const initialBun = ingredients.data.find((item) => item.type === 'bun');
+    const initialBun = findIngredientByType('bun');
 
-    const newBun = ingredients.data.find(
-      (item) => item.type === 'bun' && item.name !== initialBun?.name
-    );
-
-    if (!initialBun || !newBun) {
-      throw new Error('Не удалось найти булку в тестовых данных');
-    }
+    const newBun = findIngredientByType('bun', initialBun.name);
 
     // добавляем исходную булку
-    cy.get(`[data-testid=${SELECTORS.INGREDIENT}]`)
-      .contains(initialBun.name)
-      .parents('li')
-      .within(() => {
-        cy.get(`button`).click({ force: true });
-      });
+    cy.addIngredientToConstructor(initialBun.name);
 
     // проверяем, что исходная булка добавлена
-    cy.get('.constructor-element_pos_top').should('contain', initialBun.name);
-    cy.get('.constructor-element_pos_bottom').should(
+    cy.get(SELECTORS.CONSTRUCTOR_ELEMENT_TOP).should(
+      'contain',
+      initialBun.name
+    );
+    cy.get(SELECTORS.CONSTRUCTOR_ELEMENT_BOTTOM).should(
       'contain',
       initialBun.name
     );
 
     // добавляем новую булку
-    cy.get(`[data-testid=${SELECTORS.INGREDIENT}]`)
-      .contains(newBun.name)
-      .parents('li')
-      .within(() => {
-        cy.get(`button`).click({ force: true });
-      });
+    cy.addIngredientToConstructor(newBun.name);
 
     // проверяем, что новая булка заменила старую
-    cy.get('.constructor-element_pos_top').should('contain', newBun.name);
-    cy.get('.constructor-element_pos_bottom').should('contain', newBun.name);
+    cy.get(SELECTORS.CONSTRUCTOR_ELEMENT_TOP).should('contain', newBun.name);
+    cy.get(SELECTORS.CONSTRUCTOR_ELEMENT_BOTTOM).should('contain', newBun.name);
   });
 
   it('Добавление начинки в конструктор', () => {
     // находим ингредиент начинки в тестовых данных
-    const filling = ingredients.data.find((item) => item.type === 'main');
-
-    if (!filling) {
-      throw new Error('Ингредиент начинки не найден в тестовых данных');
-    }
+    const filling = findIngredientByType('main');
 
     // добавляем начинку
-    cy.get(`[data-testid=${SELECTORS.INGREDIENT}]`)
-      .contains(filling.name)
-      .parents('li')
-      .within(() => {
-        cy.get(`button`).click({ force: true });
-      });
+    cy.addIngredientToConstructor(filling.name);
 
     // проверяем, что начинка добавлена в конструктор
-    cy.get('.constructor-element__row').should('contain', filling.name);
+    cy.get(SELECTORS.CONSTRUCTOR_ELEMENT_ROW).should('contain', filling.name);
   });
 });
